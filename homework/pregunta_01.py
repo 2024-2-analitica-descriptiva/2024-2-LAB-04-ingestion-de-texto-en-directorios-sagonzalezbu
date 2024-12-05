@@ -116,14 +116,5 @@ def pregunta_01():
 
     generador("files/input/test", "test_dataset.csv")
     generador("files/input/train", "train_dataset.csv")
-    # train_csv_path = os.path.join(output_dir, "train_dataset.csv")
-    # train_data.to_csv(train_csv_path, index=False)
-
-    # # Procesar los datos de prueba
-    # test_path = "files/input/test"
-    # test_data = generador(test_path)
-    # test_csv_path = os.path.join(output_dir, "test_dataset.csv")
-    # test_data.to_csv(test_csv_path, index=False)
-
     
 pregunta_01()

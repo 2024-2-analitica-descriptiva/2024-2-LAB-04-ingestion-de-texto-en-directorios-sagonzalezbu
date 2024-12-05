@@ -6,6 +6,8 @@ Escriba el codigo que ejecute la accion solicitada en cada pregunta.
 """
 
 
+
+
 def pregunta_01():
     """
     La información requerida para este laboratio esta almacenada en el
@@ -71,3 +73,57 @@ def pregunta_01():
 
 
     """
+
+    import zipfile
+    import os
+    import pandas as pd
+    import glob
+
+    with zipfile.ZipFile('files/input.zip', 'r') as zip_ref:
+        zip_ref.extractall('files')
+
+
+    os.makedirs('files/output', exist_ok=True)
+
+
+    def generador(ruta_input, nombre_output):
+
+        data = [['phrase', 'target']]
+
+        target = 'negative'
+        for filepath in glob.glob(f"{ruta_input}/{target}/*"):
+            with open(filepath, 'r', encoding='utf-8') as file:
+                phrase = file.read().strip()
+                data.append([phrase, target])
+
+        target = 'neutral'
+        for filepath in glob.glob(f"{ruta_input}/{target}/*"):
+            with open(filepath, 'r', encoding='utf-8') as file:
+                phrase = file.read().strip()
+                data.append([phrase, target])
+
+        target = 'positive'
+        for filepath in glob.glob(f"{ruta_input}/{target}/*"):
+            with open(filepath, 'r', encoding='utf-8') as file:
+                phrase = file.read().strip()
+                data.append([phrase, target])
+
+        data = pd.DataFrame(data[1:], columns=data[0])
+        data.to_csv('files/output/'+ nombre_output, index=False)
+
+        return pd.DataFrame(data)
+
+
+    generador("files/input/test", "test_dataset.csv")
+    generador("files/input/train", "train_dataset.csv")
+    # train_csv_path = os.path.join(output_dir, "train_dataset.csv")
+    # train_data.to_csv(train_csv_path, index=False)
+
+    # # Procesar los datos de prueba
+    # test_path = "files/input/test"
+    # test_data = generador(test_path)
+    # test_csv_path = os.path.join(output_dir, "test_dataset.csv")
+    # test_data.to_csv(test_csv_path, index=False)
+
+    
+pregunta_01()
